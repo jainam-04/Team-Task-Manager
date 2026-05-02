@@ -16,5 +16,6 @@ const port = process.env.PORT;
 
 app.use("/api/auth", require("./routes/AuthRoutes.js"));
 app.use("/api/projects", require("./routes/ProjectRoutes.js"));
+app.use("/api/tasks", require("./routes/TaskRoutes.js"));
 
 app.listen(port, () => console.log(`Server is running on: http://localhost:${port}`));
