@@ -14,4 +14,6 @@ mongoose.connect(process.env.MONGO_DB_URI)
 
 const port = process.env.PORT;
 
+app.use("/api/auth", require("./routes/AuthRoutes.js"));
+
 app.listen(port, () => console.log(`Server is running on: http://localhost:${port}`));
