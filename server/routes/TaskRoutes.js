@@ -45,7 +45,7 @@ router.put("/:id", auth, async (req, res) => {
             if (!task) {
                   return res.status(404).json({ message: "Task not found" });
             }
-            if (task.assignedTo.toString() !== req.user.id) {
+            if (task.assignedTo.toString() !== req.user.id && req.user.role !== "admin") {
                   return res.status(403).json({ message: "Not allowed" });
             }
             task.status = req.body.status;
@@ -83,6 +83,18 @@ router.get("/dashboard", auth, async (req, res) => {
                   }
             });
             res.status(200).json(stats);
+      }
+      catch (error) {
+            res.status(500).json({ message: error.message });
+      }
+});
+
+router.get("/project/:projectId", auth, async (req, res) => {
+      try {
+            const tasks = await Task.find({
+                  projectId: req.params.projectId
+            }).populate("assignedTo", "name email");
+            res.status(200).json(tasks);
       }
       catch (error) {
             res.status(500).json({ message: error.message });

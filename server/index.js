@@ -5,7 +5,9 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors);
+app.use(cors({
+      origin: "*"
+}));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_DB_URI)
@@ -15,6 +17,7 @@ mongoose.connect(process.env.MONGO_DB_URI)
 const port = process.env.PORT;
 
 app.use("/api/auth", require("./routes/AuthRoutes.js"));
+app.use("/api/users", require("./routes/UserRoutes.js"));
 app.use("/api/projects", require("./routes/ProjectRoutes.js"));
 app.use("/api/tasks", require("./routes/TaskRoutes.js"));
 
